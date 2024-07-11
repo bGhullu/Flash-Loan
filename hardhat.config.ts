@@ -5,6 +5,7 @@ dotenv.config();
 
 const mainnet_provider_url = process.env.MAINNET_PROVIDER_URL!;
 const testnet_provider_url = process.env.TESTNET_PROVIDER_URL!;
+const base_mainnet_url = process.env.BASE_MAINNET_URL!;
 const private_key = process.env.PRIVATE_KEY!;
 
 const config: HardhatUserConfig = {
@@ -17,6 +18,12 @@ const config: HardhatUserConfig = {
         url: mainnet_provider_url,
       },
     },
+    base: {
+      forking: {
+        url: base_mainnet_url,
+      },
+    },
+
     testnet: {
       url: testnet_provider_url,
       chainId: 97,
