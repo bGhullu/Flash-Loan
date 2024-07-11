@@ -119,6 +119,34 @@ contract FlashLoan {
         console.log("Swap2 Amount:", acquiredAmount);
 
         // Repay the Flashloan
+
+        if (fee0 > 0) {
+            TransferHelper.safeApprove(
+                address(token0),
+                address(this),
+                token0.balanceOf(address(this))
+            );
+            token0.safeTransfer(address(pool), decoded.amount0 + fee0);
+            console.log("Token0: ", address(token0));
+            console.log("Token0 Balance:", token0.balanceOf(address(this)));
+            token0.safeTransfer(
+                decoded.caller,
+                token0.balanceOf(address(this))
+            );
+        } else {
+            TransferHelper.safeApprove(
+                address(token1),
+                address(this),
+                token0.balanceOf(address(this))
+            );
+            token1.safeTransfer(address(pool), decoded.amount1 + fee1);
+            console.log("Token1: ", address(token1));
+            console.log("Token1 Balance:", token1.balanceOf(address(this)));
+            token1.safeTransfer(
+                decoded.caller,
+                token0.balanceOf(address(this))
+            );
+        }
     }
 
     function place_swap(
