@@ -123,30 +123,6 @@ contract FlashLoanBase is
                 sqrtPriceLimitX96: 0
             })
         );
-
-        uint256 amount0Owed = LowGasSafeMath.add(decoded.amount0, fee0);
-        uint256 amount1Owed = LowGasSafeMath.add(decoded.amount1, fee1);
-
-        TransferHelper.safeApprove(token0, address(this), amount0Owed);
-        TransferHelper.safeApprove(token1, address(this), amount1Owed);
-
-        if (amount0Owed > 0)
-            pay(token0, address(this), msg.sender, amount0Owed);
-        if (amount1Owed > 0)
-            pay(token1, address(this), msg.sender, amount1Owed);
-
-        // if profitable pay profits to payer
-        if (amountOut0 > amount0Owed) {
-            uint256 profit0 = LowGasSafeMath.sub(amountOut0, amount0Owed);
-
-            TransferHelper.safeApprove(token0, address(this), profit0);
-            pay(token0, address(this), decoded.payer, profit0);
-        }
-        if (amountOut1 > amount1Owed) {
-            uint256 profit1 = LowGasSafeMath.sub(amountOut1, amount1Owed);
-            TransferHelper.safeApprove(token0, address(this), profit1);
-            pay(token1, address(this), decoded.payer, profit1);
-        }
     }
 
     function initFlash(FlashParams memory params) external {
