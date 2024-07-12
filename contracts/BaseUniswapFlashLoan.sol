@@ -24,13 +24,6 @@ contract FlashLoanBase is
 
     ISwapRouter public immutable i_swapRouter;
 
-    // address immutable i_factory;
-    address immutable i_token0;
-    address immutable i_tokne1;
-    address immutable i_token2;
-
-    uint24 immutable i_poolFee;
-
     struct FlashParams {
         address token0;
         address token1;
@@ -53,17 +46,9 @@ contract FlashLoanBase is
     constructor(
         ISwapRouter _swapRouter,
         address _factory,
-        address _WETH9,
-        address _token0,
-        address _token1,
-        address _token2,
-        uint24 _poolFee
+        address _WETH9
     ) PeripheryImmutableState(_factory, _WETH9) {
         i_swapRouter = _swapRouter;
-        i_token0 = _token0;
-        i_tokne1 = _token1;
-        i_token2 = _token2;
-        i_poolFee = _poolFee;
     }
 
     function uniswapV3FlashCallback(
