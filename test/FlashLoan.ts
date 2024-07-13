@@ -16,8 +16,6 @@ describe("BSCFlashLoanPancakeSwap", function () {
     const whaleBalance = await provider.getBalance(WHALE_ADDRESS_BUSD);
     expect(whaleBalance).not.equal("0");
 
-    // Impersonate Whale Account
-
     await network.provider.request({
       method: "hardhat_impersonateAccount",
       params: [WHALE_ADDRESS_BUSD],
